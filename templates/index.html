@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Regex Matching Web App</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            color: #333;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 20px;
+            width: 60%;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input {
+            padding: 10px;
+            margin: 5px 0;
+            width: 100%;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        h2 {
+            margin-top: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        li {
+            margin: 5px 0;
+        }
+
+        /* Styling for the Validate Specific Email form */
+        .validate-email-form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 60%;
+        }
+
+        span.valid {
+            color: green;
+            font-weight: bold;
+        }
+
+        span.invalid {
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <form action="/results" method="post">
+        <label for="test_string">Test String:</label>
+        <input type="text" id="test_string" name="test_string" required>
+        
+        <label for="regex_pattern">Regex Pattern:</label>
+        <input type="text" id="regex_pattern" name="regex_pattern" required>
+        
+        <button type="submit">Submit</button>
+    </form>
+
+    <h2>Validate Specific Email:</h2>
+    <form class="validate-email-form" action="/validate_email" method="post">
+        <label for="email">Enter Email:</label>
+        <input type="text" id="email" name="email" required>
+        <button type="submit">Validate Email</button>
+        {% if is_valid_email is not none %}
+            <p>Email Validation: {% if is_valid_email %}<span class="valid">Valid</span>{% else %}<span class="invalid">Invalid</span>{% endif %}</p>
+        {% endif %}
+    </form>
+
+    {% if test_string and regex_pattern %}
+        <!-- Results for regex matching -->
+        <ul>
+            <h2>Results:</h2>
+            {% for match in matches %}
+                <li>{{ match }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</body>
+</html>
